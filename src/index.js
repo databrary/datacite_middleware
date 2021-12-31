@@ -12,7 +12,8 @@ const datacite_url = process.env.DATACITE_URL || 'https://api.datacite.org'
 
 
 const encodeBase64 = function (str) {
-    return new Buffer(str, 'base64')
+    const buffer = new Buffer(str)
+    return buffer.toString('base64')
 }
 
 const AuthorizarionHeader = "Basic " + encodeBase64(process.env.DATACITE_USERNAME + ":" + process.env.DATACITE_PASSWORD)
