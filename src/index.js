@@ -1,7 +1,7 @@
-import fetch from 'node-fetch'
-import express from 'express'
-import dotenv from 'dotenv'
-import bodyParser from 'body-parser'
+const express = require('express')
+const dotenv = require('dotenv')
+const bodyParser = require('body-parser')
+const fetch = require('node-fetch')
 
 dotenv.config()
 
@@ -39,6 +39,7 @@ const buildPayload = (encodeXml, doi) => {
 
 app.get('/status', async (req, res) => {
     try {
+        console.log('REQUEST GET: /status')
         const response =  await fetch(
             `${datacite_url}/heartbeat`,
             {
@@ -51,7 +52,7 @@ app.get('/status', async (req, res) => {
             return res.status(200).send('"success" : "Datacite is up"')
         }
     } catch (error) {
-        console.log('Error', error)
+        console.error('GET: /status Error', error)
     }
 
     res.status(400).send('"error": "Datacite is down"')
@@ -62,6 +63,7 @@ app.post('/id/*', async (req, res) => {
     const body = parseTextBody(req.body)
 
     try {
+        console.log(`REQUEST POST: /id/doi:${doi}`)
         const response = await fetch(
             `${datacite_url}/dois`,
             {
@@ -80,7 +82,7 @@ app.post('/id/*', async (req, res) => {
         }
         
     } catch (error) {
-        console.error('Error', error)
+        console.error(`POST: /id/doi:${doi} Error`, error)
     }
 
     res.status(400).send('error: "DOI NOT POSTED"')
@@ -91,6 +93,7 @@ app.put('/id/*', async (req, res) => {
     const body = parseTextBody(req.body)
 
     try {
+        console.log(`REQUEST PUT: /id/doi:${doi}`)
         const response = await fetch(
             `${datacite_url}/dois/${doi}`,
             {
@@ -108,7 +111,7 @@ app.put('/id/*', async (req, res) => {
             return res.status(200).send(`success : doi${doi} \n datacite: ${JSON.stringify(result)}`)
         }
     } catch (error) {
-        console.error('Error', error)
+        console.error(`PUT: /id/doi:${doi} Error`, error)
     }
 
     res.status(400).send('error: "DOI NOT UPDATED"')
