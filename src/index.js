@@ -48,11 +48,12 @@ app.get('/status', function (req, res) {
         }
     ).then((response) => {
         if (response.status === 200) {
-            return res.status(200).send('"success" : "Datacite is up"')
+            console.log('SUCESS GET: /status Datacite is up' )
+            return res.status(200).send('success:Datacite is up')
         }
     }).catch((error) => {
         console.error('GET: /status Error', error)
-        return res.status(400).send('"error": "Datacite is down"')
+        return res.status(400).send('error:Datacite is down')
     })
 })
 
@@ -74,12 +75,13 @@ app.post('/id/*', function (req, res) {
     ).then((response) => {
         if (response.status === 201) {
             return response.json().then((data) => {
-                return res.status(201).send("success : doi:" + doi + " \n " + "datacite : " + JSON.stringify(data))
+                console.log("SUCCESS POST: /id/doi:" + doi + " datacite: " + JSON.stringify(data))
+                return res.status(201).send('success')
             })   
         }
     }).catch((error) => {
         console.error("POST: /id/doi:" + doi + "Error", error)
-        return res.status(400).send('error: "DOI NOT POSTED"')
+        return res.status(400).send('error:DOI NOT POSTED')
     })    
 })
 
@@ -101,12 +103,13 @@ app.put('/id/*', function (req, res) {
     ).then((response) => {
         if (response.status === 200) {
             return response.json().then((data) => {
-                return res.status(200).send("success : doi:" + doi + " \n " + "datacite : " + JSON.stringify(data))
+                console.log("SUCCESS PUT: /id/doi:" + doi + "datacite : " + JSON.stringify(data))
+                return res.status(200).send("success:doi:" + doi)
             })
         }
     }).catch((error) => {
         console.error("PUT: /id/doi:" + doi + "Error", error)
-        return res.status(400).send('error: "DOI NOT UPDATED"')
+        return res.status(400).send('error')
     })  
 })
 
