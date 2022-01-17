@@ -49,7 +49,7 @@ app.get('/status', function (req, res) {
     ).then((response) => {
         if (response.status === 200) {
             console.log('SUCESS GET: /status Datacite is up' )
-            return res.status(200).send('success:Datacite is up')
+            return res.status(200).send('success')
         }
     }).catch((error) => {
         console.error('GET: /status Error', error)
